@@ -9,7 +9,7 @@ library XChain {
     Vm constant vm = Vm(address(bytes20(uint160(uint256(keccak256("hevm cheat code"))))));
 
     function getRPC(uint _id) public returns (string memory) {
-        Solenv.config();
+        Solenv.config('./lib/xchain/rpcs.txt');
         if (_id == 1) {
             return vm.envString("XCHAIN_MAINNET_RPC");
         } else if (_id == 3) {
@@ -36,7 +36,7 @@ library XChain {
     }
 
     function getRPC(string memory _name) public returns (string memory) {
-        Solenv.config();
+        Solenv.config('./lib/xchain/rpcs.txt');
         bytes32 nameHash = keccak256(bytes(_name));
         if (nameHash == keccak256("mainnet")) {
             return vm.envString("XCHAIN_MAINNET_RPC");
