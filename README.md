@@ -1,6 +1,6 @@
 # <h1 align="center"> xchain </h1>
 
-**Cross chain calls from Solidity tests and scripts**
+**Cross chain calls from Solidity tests and scripts.**
 
 ## Installation
 

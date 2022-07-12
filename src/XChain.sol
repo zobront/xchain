@@ -8,7 +8,7 @@ import "openzeppelin-contracts/contracts/utils/Strings.sol";
 library XChain {
     Vm constant vm = Vm(address(bytes20(uint160(uint256(keccak256("hevm cheat code"))))));
 
-    // PUBLIC FUNCTIONS //
+    // PEEK FUNCTIONS //
 
     function peek(
         uint _chainId, 
