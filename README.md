@@ -18,11 +18,15 @@ import { XChain } from "xchain/XChain.sol";
 
 2. Enable [ffi](https://book.getfoundry.sh/cheatcodes/ffi.html).
 
+```
 You can either pass the `--ffi` flag to any forge commands you run (e.g. `forge script Script --ffi`), or you can add `ffi = true` to your `foundry.toml` file.
+```
 
 3. Add any RPC URLs needed to rpcs.txt.
 
-You can find it xyz.
+```
+The file lives at `./lib/xchain/rpcx.txt`. 
+```
 
 4. Make your cross chain calls:
 
@@ -59,7 +63,7 @@ headers[0] = "Content-Type: application/json";
 
 ## Example
 
-We have example usage for both [tests](./test/Surl.t.sol) and [scripts](./script/).
+You can find [example usage for tests](./test/XChain.t.sol) in the `test` repo.
 
 ## Contributing
 
