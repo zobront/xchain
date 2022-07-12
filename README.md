@@ -87,8 +87,8 @@ This project uses [Foundry](https://getfoundry.sh). See the [book](https://book.
 
 ## To Dos
 
-[] add decoding helpers for more complex types
-[] have RPC URLs pull from environment variables if not set in rpcs.txt
+[ ] decoding helpers for more complex types
+[ ] RPC URLs pull from environment variables if not set in rpcs.txt
 
 ## Thanks
 
