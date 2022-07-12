@@ -19,22 +19,33 @@ import { XChain } from "xchain/XChain.sol";
 2. Enable [ffi](https://book.getfoundry.sh/cheatcodes/ffi.html).
 
 ```
-You can either pass the `--ffi` flag to any forge commands you run (e.g. `forge script Script --ffi`), or you can add `ffi = true` to your `foundry.toml` file.
+The easiest option is to add `ffi = true` to your `foundry.toml` file.
+
+You can also pass the `--ffi` flag to any forge commands you run (e.g. `forge script Script --ffi`).
 ```
 
 3. Add any RPC URLs needed to rpcs.txt.
 
 ```
-The file lives at `./lib/xchain/rpcx.txt`. 
+The file lives at ./lib/xchain/rpcs.txt. 
 ```
 
-4. Make your cross chain calls:
+4. Make your cross chain calls.
 
 ```solidity
-- call with calldata string or function
 
-// Perform a simple get request
-(uint256 status, bytes memory data) = "https://httpbin.org/get".get();
+XChain.peek(chain (as int or string), contract address, function signature and args as string)
+
+// with chain as int
+bytes memory res = XChain.peek(1, CONTRACT_ADDRESS, '"ownerOf(uint256)" 1');
+
+// with chain as string
+bytes memory res = XChain.peek("mainnet", CONTRACT_ADDRESS, '"ownerOf(uint256)" 1');
+
+XChain.peekWithCalldata(chain (as int or string), contract address, calldata as string)
+
+bytes memory res = XChain.peekWithCalldata(1, CONTRACT_ADDRESS, "0x6352211e0000000000000000000000000000000000000000000000000000000000000001");
+
 
 // Perform a get request with headers
 string[] memory headers = new string[](2);
