@@ -8,8 +8,70 @@ import "openzeppelin-contracts/contracts/utils/Strings.sol";
 library XChain {
     Vm constant vm = Vm(address(bytes20(uint160(uint256(keccak256("hevm cheat code"))))));
 
-    function getRPC(uint _id) public returns (string memory) {
-        Solenv.config('./lib/xchain/rpcs.txt');
+    // PUBLIC FUNCTIONS //
+
+    function peek(
+        uint _chainId, 
+        address _addr, 
+        string memory _fxAndArgs
+    ) public returns(bytes memory) {
+        return _makeXChainCall(_getRPC(_chainId), _addr, _fxAndArgs);
+    } 
+
+    function peek(
+        string memory _chainName, 
+        address _addr, 
+        string memory _fxAndArgs
+    ) public returns(bytes memory) {
+        return _makeXChainCall(_getRPC(_chainName), _addr, _fxAndArgs);
+    }
+
+    function peekWithCalldata(
+        string memory _chainName, 
+        address _addr, 
+        string memory _calldata
+    ) public returns(bytes memory) {
+        return _makeXChainCall(_getRPC(_chainName), _addr, _calldata);
+    }
+
+    function peekWithCalldata(
+        uint _chainId,
+        address _addr, 
+        string memory _calldata
+    ) public returns(bytes memory) {
+        return _makeXChainCall(_getRPC(_chainId), _addr, _calldata);
+    }
+
+    // DECODING FUNCTIONS //
+
+    function decodeAddress(bytes memory _bytes) public pure returns(address) {
+        return address(uint160(uint256(bytes32(_bytes))));
+    }
+
+    function decodeInt(bytes memory _bytes) public pure returns(uint256) {
+        return uint256(bytes32(_bytes));
+    }
+
+    // INTERNAL FUNCTIONS
+
+    function _makeXChainCall(
+        string memory _chainRPC, 
+        address _addr,
+        string memory _data
+    ) internal returns (bytes memory) {
+        string[] memory inputs = new string[](5);
+        inputs[0] = "bash";
+        inputs[1] = "./src/xch.sh";
+        inputs[2] = _chainRPC;
+        inputs[3] = Strings.toHexString(uint256(uint160(_addr)), 20);
+        inputs[4] = _data;
+        
+        return vm.ffi(inputs);
+    }
+
+    function _getRPC(uint _id) internal returns (string memory) {
+        // Solenv.config('./lib/xchain/src/rpcs.txt');
+        Solenv.config('./rpcs.txt');
         if (_id == 1) {
             return vm.envString("XCHAIN_MAINNET_RPC");
         } else if (_id == 3) {
@@ -35,8 +97,8 @@ library XChain {
         }
     }
 
-    function getRPC(string memory _name) public returns (string memory) {
-        Solenv.config('./lib/xchain/rpcs.txt');
+    function _getRPC(string memory _name) internal returns (string memory) {
+        Solenv.config('./rpcs.txt');
         bytes32 nameHash = keccak256(bytes(_name));
         if (nameHash == keccak256("mainnet")) {
             return vm.envString("XCHAIN_MAINNET_RPC");
@@ -61,52 +123,5 @@ library XChain {
         } else {
             revert("Invalid network name");
         }
-    }
-
-    function XChain(
-        uint _chainId, 
-        address _addr, 
-        string memory _fxAndArgs
-    ) public returns(bytes memory) {
-        return _makeXChainCall(getRPC(_chainId), _addr, _fxAndArgs);
-    } 
-
-    function XChain(
-        string memory _chainName, 
-        address _addr, 
-        string memory _fxAndArgs
-    ) public returns(bytes memory) {
-        return _makeXChainCall(getRPC(_chainName), _addr, _fxAndArgs);
-    }
-
-    function XChainFromCalldata(
-        string memory _chainName, 
-        address _addr, 
-        string memory _calldata
-    ) public returns(bytes memory) {
-        return _makeXChainCall(getRPC(_chainName), _addr, _calldata);
-    }
-
-    function XChainFromCalldata(
-        uint _chainId,
-        address _addr, 
-        string memory _calldata
-    ) public returns(bytes memory) {
-        return _makeXChainCall(getRPC(_chainId), _addr, _calldata);
-    }
-
-    function _makeXChainCall(
-        string memory _chainRPC, 
-        address _addr,
-        string memory _data
-    ) internal returns (bytes memory) {
-        string[] memory inputs = new string[](5);
-        inputs[0] = "bash";
-        inputs[1] = "./lib/xchain/src/xch.sh";
-        inputs[2] = _chainRPC;
-        inputs[3] = Strings.toHexString(uint256(uint160(_addr)), 20);
-        inputs[4] = _data;
-        
-        return vm.ffi(inputs);
     }
 }
