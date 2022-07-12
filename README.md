@@ -34,38 +34,37 @@ The file lives at ./lib/xchain/rpcs.txt.
 
 ```solidity
 
-XChain.peek(chain (as int or string), contract address, function signature and args as string)
+// Peek function with Chain ID.
+XChain.peek(
+    int _chainId,
+    address contract,
+    string memory functionSig
+)
 
-// with chain as int
+// Example
 bytes memory res = XChain.peek(1, CONTRACT_ADDRESS, '"ownerOf(uint256)" 1');
 
-// with chain as string
+// Peek function with Chain Name.
+XChain.peek(
+    string memory _chainName,
+    address contract,
+    string memory functionSig
+)
+
+// Example
 bytes memory res = XChain.peek("mainnet", CONTRACT_ADDRESS, '"ownerOf(uint256)" 1');
 
-XChain.peekWithCalldata(chain (as int or string), contract address, calldata as string)
+// PeekWithCalldata function with Chain ID.
+XChain.peekWithCalldata(
+    uint _chainId,
+    address contract,
+    string memory _calldata
+)
 
+// Example
 bytes memory res = XChain.peekWithCalldata(1, CONTRACT_ADDRESS, "0x6352211e0000000000000000000000000000000000000000000000000000000000000001");
 
 
-// Perform a get request with headers
-string[] memory headers = new string[](2);
-headers[0] = "accept: application/json";
-headers[1] = "Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==";
-(uint256 status, bytes memory data) = "https://httpbin.org/get".get(headers);
-
-// Perform a post request with headers and JSON body
-string[] memory headers = new string[](1);
-headers[0] = "Content-Type: application/json";
-(uint256 status, bytes memory data) = "https://httpbin.org/post".post(headers, '{"foo": "bar"}');
-
-// Perform a put request
-(uint256 status, bytes memory data) = "https://httpbin.org/put".put();
-
-// Perform a patch request
-(uint256 status, bytes memory data) = "https://httpbin.org/put".patch();
-
-// Perform a delete request (unfortunately 'delete' is a reserved keyword and cannot be used as a function name)
-(uint256 status, bytes memory data) = "https://httpbin.org/delete".del();
 ```
 
 ### Notes
