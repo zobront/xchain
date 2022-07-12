@@ -34,36 +34,38 @@ The file lives at ./lib/xchain/rpcs.txt.
 
 ```solidity
 
-// Peek function with Chain ID.
+// There are two peek functions: peek() and peekWithCalldata().
+
 XChain.peek(
-    int _chainId,
+    uint _chainId OR string memory _chainName,
     address contract,
     string memory functionSig
 )
 
-// Example
-bytes memory res = XChain.peek(1, CONTRACT_ADDRESS, '"ownerOf(uint256)" 1');
-
-// Peek function with Chain Name.
-XChain.peek(
-    string memory _chainName,
-    address contract,
-    string memory functionSig
-)
-
-// Example
-bytes memory res = XChain.peek("mainnet", CONTRACT_ADDRESS, '"ownerOf(uint256)" 1');
-
-// PeekWithCalldata function with Chain ID.
 XChain.peekWithCalldata(
-    uint _chainId,
+    uint _chainId OR string memory _chainName,
     address contract,
     string memory _calldata
 )
 
-// Example
+// Example peek() with Chain ID
+bytes memory res = XChain.peek(1, CONTRACT_ADDRESS, '"ownerOf(uint256)" 1');
+
+// Example peek() with Chain Name
+bytes memory res = XChain.peek("mainnet", CONTRACT_ADDRESS, '"ownerOf(uint256)" 1');
+
+// Example peekWithCalldata() with Chain ID.
 bytes memory res = XChain.peekWithCalldata(1, CONTRACT_ADDRESS, "0x6352211e0000000000000000000000000000000000000000000000000000000000000001");
 
+5. Decode the response.
+
+```solidity
+// Responses are always encoded as bytes, and must be decoded into the expected type.
+address addr = address(uint160(uint256(bytes32(res))));
+
+// There are two built in helper methods for decoding addresses and ints.
+address addr = XChain.decodeAddress(res);
+uint num = XChain.decodeInt(res);
 
 ```
 
