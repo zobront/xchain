@@ -73,7 +73,7 @@ uint num = XChain.decodeInt(res);
 
 ### Notes
 
-- It assumes you are running on a UNIX based machine with `bash`, `tail`, `sed`, `tr`, `curl` and `cast` installed.
+It assumes you are running on a UNIX based machine with `bash`, `tail`, `sed`, `tr`, `curl` and `cast` installed.
 
 ## Example
 
