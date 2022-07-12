@@ -64,7 +64,7 @@ We have example usage for both [tests](./test/Surl.t.sol) and [scripts](./script
 ## Contributing
 
 [] build in functions to decode returned bytes for complex types
-[] 
+[] have rpcs pull from environment variables?
 
 Clone this repo and run:
 

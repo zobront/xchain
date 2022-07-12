@@ -61,7 +61,7 @@ library XChain {
     ) internal returns (bytes memory) {
         string[] memory inputs = new string[](5);
         inputs[0] = "bash";
-        inputs[1] = "./src/xch.sh";
+        inputs[1] = "./lib/xchain/src/xch.sh";
         inputs[2] = _chainRPC;
         inputs[3] = Strings.toHexString(uint256(uint160(_addr)), 20);
         inputs[4] = _data;
@@ -70,8 +70,7 @@ library XChain {
     }
 
     function _getRPC(uint _id) internal returns (string memory) {
-        // Solenv.config('./lib/xchain/src/rpcs.txt');
-        Solenv.config('./rpcs.txt');
+        Solenv.config('./lib/xchain/rpcs.txt');
         if (_id == 1) {
             return vm.envString("XCHAIN_MAINNET_RPC");
         } else if (_id == 3) {
@@ -98,7 +97,7 @@ library XChain {
     }
 
     function _getRPC(string memory _name) internal returns (string memory) {
-        Solenv.config('./rpcs.txt');
+        Solenv.config('./lib/xchain/rpcs.txt');
         bytes32 nameHash = keccak256(bytes(_name));
         if (nameHash == keccak256("mainnet")) {
             return vm.envString("XCHAIN_MAINNET_RPC");
