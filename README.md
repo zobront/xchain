@@ -8,6 +8,8 @@
 forge install zobront/xchain
 ```
 
+Note: You must be running a UNIX based machine with `bash` and `cast` installed.
+
 ## Usage
 
 1. Add import to your test or script
@@ -70,10 +72,6 @@ address addr = XChain.decodeAddress(res);
 uint num = XChain.decodeInt(res);
 
 ```
-
-### Notes
-
-It assumes you are running on a UNIX based machine with `bash`, `tail`, `sed`, `tr`, `curl` and `cast` installed.
 
 ## Example
 
