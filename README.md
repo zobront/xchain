@@ -10,13 +10,13 @@ forge install zobront/xchain
 
 ## Usage
 
-1. ADD IMPORT INTO TEST OR SCRIPT
+1. Add import to your test or script
 
 ```solidity
 import { XChain } from "xchain/XChain.sol";
 ```
 
-2. ENABLE [FFI](https://book.getfoundry.sh/cheatcodes/ffi.html).
+2. Enable [ffi](https://book.getfoundry.sh/cheatcodes/ffi.html).
 
 ```
 The easiest option is to add `ffi = true` to your `foundry.toml` file.
@@ -24,13 +24,13 @@ The easiest option is to add `ffi = true` to your `foundry.toml` file.
 You can also pass the `--ffi` flag to any forge commands you run (e.g. `forge script Script --ffi`).
 ```
 
-3. ADD RPC URLS TO FILE
+3. Add RPC URLs to the text file
 
 ```
-The file lives at ./lib/xchain/rpcs.txt. 
+The file lives at ./rpcs.txt. From the root of your project, the path will be ./lib/xchain/rpcs.txt.
 ```
 
-4. MAKE CROSS CHAIN CALLS
+4. Make cross chain calls from your test or script
 
 ```solidity
 
@@ -59,7 +59,7 @@ bytes memory res = XChain.peekWithCalldata(1, CONTRACT_ADDRESS, "0x6352211e00000
 
 ```
 
-5. DECODE RESPONSES
+5. Decode responses
 
 ```solidity
 // Responses are always encoded as bytes, and must be decoded into the expected type.
@@ -79,23 +79,6 @@ uint num = XChain.decodeInt(res);
 
 You can find [example usage for tests](./test/XChain.t.sol) in the `test` repo.
 
-## Contributing
-
-[] build in functions to decode returned bytes for complex types
-[] have rpcs pull from environment variables?
-
-Clone this repo and run:
-
-```
-forge install
-```
-
-Make sure all tests pass, add new ones if needed:
-
-```
-forge test
-```
-
 ## Why?
 
 There is often a need to get data from other chains in the middle of Solidity tests and scripts. Currently, Forge only allows forking one network, so we aren't able to access this other data. With XChain, you can easily get data from other chains in the middle of your tests and scripts.
@@ -103,6 +86,11 @@ There is often a need to get data from other chains in the middle of Solidity te
 ## Development
 
 This project uses [Foundry](https://getfoundry.sh). See the [book](https://book.getfoundry.sh/getting-started/installation.html) for instructions on how to install and use Foundry.
+
+## To Dos
+
+[] add decoding helpers for more complex types
+[] have RPC URLs pull from environment variables if not set in rpcs.txt
 
 ## Thanks
 
